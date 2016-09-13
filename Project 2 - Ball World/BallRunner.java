@@ -5,27 +5,51 @@
  */
 public class BallRunner
 {
-    BallWorld ballWorld;
-    TGPoint entrancePoint;
-    BallBot[] ballBotArray;
-   public BallRunner(BallWorld ballWorld, TGPoint entrancePoint, int ballBotArrayLength){
-       this.ballWorld = ballWorld;
-       this.entrancePoint = entrancePoint;
-       ballBotArray = new BallBot[ballBotArrayLength];
+    BallWorld ballWorld = new BallWorld(500, 500);
+    TGPoint entrancePoint = new TGPoint(0,0);
+    BallBot ballBotArray[] = new BallBot[12];
+
+    private double heading;
+
+    public BallRunner()
+    {
+
+        BallWorld ballWorld = new BallWorld(500,500);
+        TGPoint entrancePoint = new TGPoint(0,0);
+        int ballBotArrayLength = 12;
+
     }
-   public int findFreeBallBotIndex(){
+
+    public static void activity1(){
+        int x = 0;
+        BallWorld ballWorld1 = new BallWorld(200, 200);
+        TGPoint tgPoint1 = new TGPoint(0,0);
+        BallBot ballBot1 = new BallBot(ballWorld1, tgPoint1, 0, 25);
+        while(x==0){
+            if(ballBot1.canMoveForward(ballWorld1) == true){
+                ballBot1.moveForward();
+            }
+            else{
+                ballBot1.setHeading((ballBot1.getHeading()%360)+90);
+            }
+        }
+    }
+
+    public int findFreeBallBotIndex(){
+        int ret = 0;
         for(int i = 0; i < ballBotArray.length; i++){
-            if(ballBotArray[i]==null)return i;
+            if(ballBotArray[i] == null){
+                ret = i;
+            }
+            else{
+                ret = ballBotArray.length;
+
+            }
         }
-        return ballBotArray.length;
+        return ret;
+    }    
+
+    public static void activity2(){
+        
     }
-   public static void activity1 (){
-       BallWorld ballWorld = new BallWorld (200, 200);
-       TGPoint tgPoint = new TGPoint (0,0);
-       BallBot ballBot = new BallBot (ballWorld, tgPoint, 90.0, 30);
-       while(true){
-           if(ballBot.canMoveForward(ballWorld)) ballBot.moveForward();
-           else ballBot.setHeading((ballBot.getHeading()+90)%360);
-        }
-     }
 }
