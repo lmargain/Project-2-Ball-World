@@ -1,10 +1,14 @@
 #BlueJ class context
-comment0.params=
-comment0.target=BallRunner()
+comment0.params=ballWorld1\ entrancePoint1\ ballBotArrayLength
+comment0.target=BallRunner(BallWorld,\ TGPoint,\ int)
 comment1.params=
 comment1.target=void\ activity1()
 comment2.params=
 comment2.target=int\ findFreeBallBotIndex()
 comment3.params=
-comment3.target=void\ activity2()
-numComments=4
+comment3.target=void\ run()
+comment4.params=point1\ point2
+comment4.target=double\ distanceBetweenPoints(TGPoint,\ TGPoint)
+comment5.params=
+comment5.target=boolean\ entranceClear()
+numComments=6

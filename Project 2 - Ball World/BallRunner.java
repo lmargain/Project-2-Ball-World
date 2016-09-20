@@ -5,22 +5,22 @@
  */
 public class BallRunner
 {
-    BallWorld ballWorld = new BallWorld(500, 500);
-    TGPoint entrancePoint = new TGPoint(0,0);
-    BallBot ballBotArray[] = new BallBot[12];
+    BallWorld ballWorld;
+    TGPoint entrancePoint;
+    BallBot ballBotArray[];
 
     private double heading;
 
-    public BallRunner()
+    public BallRunner(BallWorld ballWorld1, TGPoint entrancePoint1, int ballBotArrayLength)
     {
 
-        BallWorld ballWorld = new BallWorld(500,500);
-        TGPoint entrancePoint = new TGPoint(0,0);
-        int ballBotArrayLength = 12;
+        ballWorld = ballWorld1;
+        entrancePoint = entrancePoint1;
+        ballBotArray = new BallBot[ballBotArrayLength];
 
     }
 
-    public static void activity1(){
+    public  void activity1(){
         int x = 0;
         BallWorld ballWorld1 = new BallWorld(200, 200);
         TGPoint tgPoint1 = new TGPoint(0,0);
@@ -39,17 +39,62 @@ public class BallRunner
         int ret = 0;
         for(int i = 0; i < ballBotArray.length; i++){
             if(ballBotArray[i] == null){
-                ret = i;
+                return i;
             }
-            else{
-                ret = ballBotArray.length;
 
-            }
         }
-        return ret;
+        return ballBotArray.length;
     }    
 
-    public static void activity2(){
-        
+    public static void run(){
+        int x = 0;
+        int freeBallBotIndex;
+        boolean clearPoint;
+        BallWorld ballWorld = new BallWorld(500, 500);
+        TGPoint entrancePoint = new TGPoint(0,0);
+        BallRunner ballRunner = new BallRunner(ballWorld, entrancePoint, 12);
+        while(x==0){
+            freeBallBotIndex = ballRunner.findFreeBallBotIndex();
+            clearPoint = ballRunner.entranceClear();
+            if(clearPoint){
+                if(freeBallBotIndex < ballRunner.ballBotArray.length){
+                    ballRunner.ballBotArray[freeBallBotIndex] = new BallBot(ballWorld, entrancePoint, Math.random()*360, 30); 
+                }
+            }
+
+            for(int i = 0; i < ballRunner.ballBotArray.length; i++){
+                BallBot ballBot1 = ballRunner.ballBotArray[i];  
+                if(ballRunner.ballBotArray[i] != null) {
+                    if(ballBot1.canMoveForward(ballWorld) == true){
+                        ballBot1.moveForward();
+                    }
+                    else{
+                        ballBot1.setHeading((Math.random()*360));
+                    }
+                }
+            }
+        }
+
+           
+    }
+
+    public double distanceBetweenPoints(TGPoint point1,TGPoint point2){
+        double result = Math.sqrt((point1.x-point2.x)*(point1.x-point2.x)+(point1.y-point2.y)*(point1.y-point2.y));
+        return result;
+    }
+
+    public boolean entranceClear(){
+        double d = 0;
+        for(int i = 0; i < ballBotArray.length; i++){
+            if(ballBotArray[i] != null){
+                d = distanceBetweenPoints(entrancePoint, ballBotArray[i].getPoint());
+                if(d < 2 * ballBotArray[i].getRadius()){
+                    return false;
+                }
+            }
+
+        }
+        return true;   
+
     }
 }
