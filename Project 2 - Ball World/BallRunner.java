@@ -97,4 +97,8 @@ public class BallRunner
         return true;   
 
     }
+    
+    public BallBot ballBotToBounceOff(BallBot ballBot){
+    
+    }
 }
